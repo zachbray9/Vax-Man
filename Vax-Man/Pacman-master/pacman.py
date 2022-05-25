@@ -131,6 +131,10 @@ class Player(pygame.sprite.Sprite):
     change_x = 0
     change_y = 0
 
+    #created properties for turn and steps so each instantiated ghost has its own
+    turn = 0
+    steps = 0
+
     # Constructor function
     def __init__(self, x, y, filename, name):
         self.name = name
@@ -372,7 +376,7 @@ background.fill(black)
 MULTIPLY_EVENT = pygame.USEREVENT + 1
 
 clock = pygame.time.Clock()
-pygame.time.set_timer(MULTIPLY_EVENT, 3000)
+pygame.time.set_timer(MULTIPLY_EVENT, 30000)
 
 pygame.font.init()
 font = pygame.font.Font("freesansbold.ttf", 24)
@@ -394,6 +398,7 @@ def startGame():
     monsta_list = pygame.sprite.RenderPlain()
 
     active_monstas = []
+    active_monstas.clear()
 
     pacman_collide = pygame.sprite.RenderPlain()
 
@@ -498,34 +503,35 @@ def startGame():
             if event.type == MULTIPLY_EVENT:
                 print(len(active_monstas))
                 for i in range(len(active_monstas)):
+                    print(active_monstas[i].name)
                     if active_monstas[i].getname() == "Blinky":
                         new_Blinky = Ghost(w, b_h, "images/Blinky.png", "Blinky")
                         new_Blinky.rect.x = active_monstas[i].rect.x
                         new_Blinky.rect.y = active_monstas[i].rect.y
-                        #monsta_list.add(new_Blinky)
+                        monsta_list.add(new_Blinky)
                         active_monstas.append(new_Blinky)
-                        #all_sprites_list.add(new_Blinky)
+                        all_sprites_list.add(new_Blinky)
                     if active_monstas[i].getname() == "Pinky":
                         new_Pinky = Ghost(w, m_h, "images/Pinky.png", "Pinky")
                         new_Pinky.rect.x = active_monstas[i].rect.x
                         new_Pinky.rect.y = active_monstas[i].rect.y
-                        #monsta_list.add(new_Pinky)
+                        monsta_list.add(new_Pinky)
                         active_monstas.append(new_Pinky)
-                        #all_sprites_list.add(new_Pinky)
+                        all_sprites_list.add(new_Pinky)
                     if active_monstas[i].getname() == "Clyde":
                         new_Clyde = Ghost(c_w, m_h, "images/Clyde.png", "Clyde")
                         new_Clyde.rect.x = active_monstas[i].rect.x
                         new_Clyde.rect.y = active_monstas[i].rect.y
-                        #monsta_list.add(new_Clyde)
+                        monsta_list.add(new_Clyde)
                         active_monstas.append(new_Clyde)
-                        #all_sprites_list.add(new_Clyde)
+                        all_sprites_list.add(new_Clyde)
                     if active_monstas[i].getname() == "Inky":
                         new_Inky = Ghost(i_w, m_h, "images/Inky.png", "Inky")
                         new_Inky.rect.x = active_monstas[i].rect.x
                         new_Inky.rect.y = active_monstas[i].rect.y
-                        #monsta_list.add(new_Inky)
+                        monsta_list.add(new_Inky)
                         active_monstas.append(new_Inky)
-                        #all_sprites_list.add(new_Inky)
+                        all_sprites_list.add(new_Inky)
 
         # ALL EVENT PROCESSING SHOULD GO ABOVE THIS COMMENT
 
@@ -533,29 +539,55 @@ def startGame():
 
         Pacman.update(wall_list, gate)
 
-        returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
-        p_turn = returned[0]
-        p_steps = returned[1]
-        Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
-        Pinky.update(wall_list, False)
+        #returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
+        ##p_steps = returned[1]
+        #Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
+        #Pinky.update(wall_list, False)
 
-        returned = Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
-        b_turn = returned[0]
-        b_steps = returned[1]
-        Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
-        Blinky.update(wall_list, False)
+        #returned = Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
+        #b_turn = returned[0]
+        #b_steps = returned[1]
+        #Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
+        #Blinky.update(wall_list, False)
 
-        returned = Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
-        i_turn = returned[0]
-        i_steps = returned[1]
-        Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
-        Inky.update(wall_list, False)
+        #returned = Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
+        #i_turn = returned[0]
+        #i_steps = returned[1]
+        #Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
+        #Inky.update(wall_list, False)
 
-        returned = Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
-        c_turn = returned[0]
-        c_steps = returned[1]
-        Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
-        Clyde.update(wall_list, False)
+        #returned = Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
+        #c_turn = returned[0]
+        #c_steps = returned[1]
+        #Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
+        #Clyde.update(wall_list, False)
+
+        for i in range(len(active_monstas)):
+            if active_monstas[i].name == "Blinky":
+                returned = active_monstas[i].changespeed(Blinky_directions, False, active_monstas[i].turn, active_monstas[i].steps, bl)
+                active_monstas[i].turn = returned[0]
+                active_monstas[i].steps = returned[1]
+                active_monstas[i].changespeed(Blinky_directions, False, active_monstas[i].turn, active_monstas[i].steps, bl)
+                active_monstas[i].update(wall_list, False)
+            if active_monstas[i].name == "Pinky":
+                returned = active_monstas[i].changespeed(Pinky_directions, False, active_monstas[i].turn, active_monstas[i].steps, pl)
+                active_monstas[i].turn = returned[0]
+                active_monstas[i].steps = returned[1]
+                active_monstas[i].changespeed(Pinky_directions, False, active_monstas[i].turn, active_monstas[i].steps, pl)
+                active_monstas[i].update(wall_list, False)
+            if active_monstas[i].name == "Inky":
+                returned = active_monstas[i].changespeed(Inky_directions, False, active_monstas[i].turn, active_monstas[i].steps, il)
+                active_monstas[i].turn = returned[0]
+                active_monstas[i].steps = returned[1]
+                active_monstas[i].changespeed(Inky_directions, False, active_monstas[i].turn, active_monstas[i].steps, il)
+                active_monstas[i].update(wall_list, False)
+            if active_monstas[i].name == "Clyde":
+                returned = active_monstas[i].changespeed(Clyde_directions, "clyde", active_monstas[i].turn, active_monstas[i].steps, cl)
+                active_monstas[i].turn = returned[0]
+                active_monstas[i].steps = returned[1]
+                active_monstas[i].changespeed(Clyde_directions, "clyde", active_monstas[i].turn, active_monstas[i].steps, cl)
+                active_monstas[i].update(wall_list, False)
+
 
         # See if the Pacman block has collided with anything.
         blocks_hit_list = pygame.sprite.spritecollide(Pacman, block_list, True)
@@ -585,6 +617,8 @@ def startGame():
 
         if monsta_hit_list:
             for i in monsta_hit_list:
+                if i in active_monstas:
+                    active_monstas.remove(i)
                 i.kill()
                 del i
             #doNext("Game Over", 235, all_sprites_list, block_list, monsta_list, pacman_collide, wall_list, gate)
