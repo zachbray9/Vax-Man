@@ -406,17 +406,6 @@ def startGame():
 
     gate = setupGate(all_sprites_list)
 
-    p_turn = 0
-    p_steps = 0
-
-    b_turn = 0
-    b_steps = 0
-
-    i_turn = 0
-    i_steps = 0
-
-    c_turn = 0
-    c_steps = 0
 
     # Create the player paddle object
     Pacman = Player(w, p_h, "images/Trollman.png", "Pacman")
@@ -501,9 +490,7 @@ def startGame():
                     Pacman.changespeed(0, -30)
 
             if event.type == MULTIPLY_EVENT:
-                print(len(active_monstas))
                 for i in range(len(active_monstas)):
-                    print(active_monstas[i].name)
                     if active_monstas[i].getname() == "Blinky":
                         new_Blinky = Ghost(w, b_h, "images/Blinky.png", "Blinky")
                         new_Blinky.rect.x = active_monstas[i].rect.x
@@ -538,29 +525,6 @@ def startGame():
         # ALL GAME LOGIC SHOULD GO BELOW THIS COMMENT
 
         Pacman.update(wall_list, gate)
-
-        #returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
-        ##p_steps = returned[1]
-        #Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
-        #Pinky.update(wall_list, False)
-
-        #returned = Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
-        #b_turn = returned[0]
-        #b_steps = returned[1]
-        #Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
-        #Blinky.update(wall_list, False)
-
-        #returned = Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
-        #i_turn = returned[0]
-        #i_steps = returned[1]
-        #Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
-        #Inky.update(wall_list, False)
-
-        #returned = Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
-        #c_turn = returned[0]
-        #c_steps = returned[1]
-        #Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
-        #Clyde.update(wall_list, False)
 
         for i in range(len(active_monstas)):
             if active_monstas[i].name == "Blinky":
